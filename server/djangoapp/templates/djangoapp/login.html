@@ -2,23 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+<body>
 
-    <body>
-
-    <!--Add a nav bar here -->
+<!-- Navigation bar -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" ref="#">Dealership Review</a>
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Home</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li>
-                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
                     <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
@@ -38,28 +35,25 @@
             </ul>
         </div>
     </nav>
-    <h1>Reviews for {{ dealer.full_name }}</h1>
-    <!-- Add reviews as cards -->
-    <div class="card-columns">
-        {% for review in reviews %}
-            <div class="card">
-                {% if review.sentiment == "positive" %}
-                <img class="card-img-left" src="{{ MEDIA_URL }}/emoji/positive.png"/>
-                {% elif review.sentiment == "neutral" %}
-                 <img class="card-img-left" src="{{ MEDIA_URL }}/emoji/neutral.png"/>
-                 {% else %}
-                 <img class="card-img-left" src="{{ MEDIA_URL }}/emoji/negative.png"/>
-                {% endif %}
 
-                <div class="card-body">
-                    <p class="card-title">{{ review.car_make }}, {{ review.car_model }}</p>
-                    <p class="card-title">{{ review.year }}</p>
-                    <p class="card-text">{{ review.review }}</p>
-                </div>
+    <!-- Stylize Login form -->
+    <form action="{% url 'djangoapp:login' %}" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <h1>Login</h1>
+            <div class="form-group">
+              <label for="username"><b>User Name</b></label>
+              <input id="username" class = "form-control" type="text" placeholder="Enter User Name: " name="username" required>
+              <label for="psw"><b>Password</b></label>
+              <input id="psw" class = "form-control" type="password"  placeholder="Enter Password: " name="psw" required>
             </div>
-        {% endfor %}
-    </div>
+            {% if message %}
+              <div class="alert alert-warning">
+                {{ message }}
+              </div>
+            {% endif %}
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+    </form>
 
-    </body>
-
-</html>
+</body>
