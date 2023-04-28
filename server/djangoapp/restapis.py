@@ -39,7 +39,21 @@ def get_request(url, **kwargs):
 # def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
-
+def post_request(url, json_payload, **kwargs):
+    print(kwargs)
+    print("GET from {} ".format(url))
+    try:
+        # Call get method of requests library with URL and parameters
+        response = requests.post(url, json=json_payload, headers={'Content-Type': 'application/json'}, params=kwargs)
+    except:
+        # If any error occurs
+        print("Network exception occurred")
+    
+    status_code = response.status_code
+    print("With status {} ".format(status_code))
+    json_data = json.loads(response.text)
+    return json_data
+    
 def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
@@ -121,7 +135,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 def analyze_review_sentiments(dealer_review):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-apikey = "GRoTDKE9oIkdQRe1nYNDDgjVUwISXbPUNM8Wc1HNwU_0"
+    apikey = "GRoTDKE9oIkdQRe1nYNDDgjVUwISXbPUNM8Wc1HNwU_0"
     url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/14157bdf-5dcb-4adf-b08c-2e3ea9cc59f0"
     
     authenticator = IAMAuthenticator(apikey)
