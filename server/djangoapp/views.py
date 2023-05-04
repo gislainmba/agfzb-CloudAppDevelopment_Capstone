@@ -92,33 +92,33 @@ def get_dealerships(request):
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
 # ...
-def get_dealer_details(request, dealer_id):
-    context = {}
+def get_dealer_details(request, id):
     if request.method == "GET":
-        review_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
+        context = {}
         dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
-        # Get dealers from the URL
-        reviews = get_dealer_reviews_from_cf(review_url, dealer_id)
-        dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id)
-        context['reviews'] = reviews
-        context['dealer'] = dealer
-        # Return a list of dealer short name
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        context["dealer"] = dealer
+    
+        review_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
+        context["reviews"] = reviews
+        
         return render(request, 'djangoapp/dealer_details.html', context)
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
-def add_review(request, dealer_id):
-    dealer_url      = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
-    postreview_url  = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/post_review/post_review"
-    getreview_url   = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
-    
+def add_review(request, id):
     context = {}
-    dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id)
-    context['dealer'] = dealer
+    dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+    context["dealer"] = dealer
     if request.method == 'GET':
-        cars = CarModel.objects.all()
+        # Get cars for the dealer
+        cars = CarModel.objects.filter(id=id)
         print(cars)
-        context['cars'] = cars
+        context["cars"] = cars
+        
         return render(request, 'djangoapp/add_review.html', context)
     elif request.method == 'POST':
         if request.user.is_authenticated:
@@ -129,19 +129,20 @@ def add_review(request, dealer_id):
             car = CarModel.objects.get(pk=car_id)
             payload["time"] = datetime.utcnow().isoformat()
             payload["name"] = username
-            payload["dealership"] = dealer_id
-            payload["id"] = dealer_id
+            payload["dealership"] = id
+            payload["id"] = id
             payload["review"] = request.POST["content"]
             payload["purchase"] = False
             if "purchasecheck" in request.POST:
                 if request.POST["purchasecheck"] == 'on':
                     payload["purchase"] = True
             payload["purchase_date"] = request.POST["purchasedate"]
-            payload["car_make"] = car.car_make.name
+            payload["car_make"] = car.make.name
             payload["car_model"] = car.name
             payload["car_year"] = int(car.year.strftime("%Y"))
-            json_payload = {}
-            json_payload["review"] = payload
-            post_request(postreview_url, json_payload, dealerId=dealer_id)
-        return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
-        
+
+            new_payload = {}
+            new_payload["review"] = payload
+            review_post_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/post_review/post_review"
+            post_request(review_post_url, new_payload, id=id)
+        return redirect("djangoapp:dealer_details", id=id)
