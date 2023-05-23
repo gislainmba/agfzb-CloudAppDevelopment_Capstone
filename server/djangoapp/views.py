@@ -86,21 +86,21 @@ def get_dealerships(request):
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Return a list of dealer short name
-        context['dealerships'] = dealerships
+        context["dealerships"] = dealerships
         return render(request, 'djangoapp/index.html', context)
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
 # ...
-def get_dealer_details(request, id):
+def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         context = {}
         dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
-        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id=id)
         context["dealer"] = dealer
     
         review_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
-        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        reviews = get_dealer_reviews_from_cf(review_url, dealer_id=id)
         print(reviews)
         context["reviews"] = reviews
         
@@ -108,10 +108,10 @@ def get_dealer_details(request, id):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
-def add_review(request, id):
+def add_review(request, dealer_id):
     context = {}
     dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
-    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+    dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id=id)
     context["dealer"] = dealer
     if request.method == 'GET':
         # Get cars for the dealer
