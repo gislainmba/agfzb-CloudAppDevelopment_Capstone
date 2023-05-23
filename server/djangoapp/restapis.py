@@ -72,22 +72,20 @@ def get_dealers_from_cf(url, **kwargs):
             results.append(dealer_obj)
     return results
 
-def get_dealer_by_id_from_cf(url, dealer_id, **kwargs):
-    result = {}
-    # Call get_request with a URL parameter
-    json_result = get_request(url, id=dealer_id)
+def get_dealer_by_id_from_cf(url, id):
+    json_result = get_request(url, id=id)
+    print('json_result from line 54',json_result)
+
     if json_result:
-        # Get the row list in JSON as dealers
-        dealers = json_result["rows"]
-        # For each dealer object
-        dealer = dealers[0]
-        # Create a CarDealer object with values in `doc` object
-        dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"],
-                                id=dealer["id"], lat=dealer["lat"], long=dealer["long"],
-                                short_name=dealer["short_name"],
-                                st=dealer["st"], zip=dealer["zip"])
-        result = dealer_obj
-    return result
+        dealers = json_result["body"]
+        
+    
+        dealer_doc = dealers[0]
+        dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
+                                id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"], full_name=dealer_doc["full_name"],
+                                
+                                st=dealer_doc["st"], zip=dealer_doc["zip"])
+    return dealer_obj
 
 def get_dealers_by_state_from_cf(url, state, **kwargs):
     results = []
