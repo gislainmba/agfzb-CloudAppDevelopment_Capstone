@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
+        <title>
+            Contact Us
+        </title>
         <meta charset="UTF-8">
-        <title>Dealership Review</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -11,26 +13,61 @@
         <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
         <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     </head>
-    
     <body>
-        <!--Add a nav bar here -->
-        <nav class="navbar navbar-light bg-light">
-            <div class="navbar-header">
-                <a class="navbar-brand" ref="#">Best Cars</a>
+        {% include 'Navbar.html' %}
+        <div class="container">
+            <h2 class="heading-txt" style="font-size: 2em; margin-bottom: 3%; text-align: center;">We Are Available 24/7</h2>
+            <div style="margin-top: 5%;display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Contact Information</div>
+                <div class="card-body">
+                    <h5 class="card-title">Customer Care</h5>
+                    <p class="card-text">Name: tadias </br> Mobile: 0999911111 </br> Email: tadias@dealership.com </p>
+                </div>
             </div>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href=".">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Contact Us</a>
-                </li>
-            </ul>
-        </nav>
-        <b>Address: </b>Ponta do Ouro<br/>
-        <b>Telephone Number: </b>+258849022333
+                   <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Contact Information</div>
+                <div class="card-body">
+                    <h5 class="card-title">Customer Care</h5>
+                    <p class="card-text">Name: tameta </br> Mobile: 0999999999 </br> Email: tameta@dealership.com </p>
+                </div>
+            </div>
+                    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Contact Information</div>
+                <div class="card-body">
+                    <h5 class="card-title">Contact center Advisor</h5>
+                    <p class="card-text">Name: dany </br> Mobile: 1234567890 </br> Email: dani@dealership.com </p>
+                </div>
+            </div>
+                    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Contact Information</div>
+                <div class="card-body">
+                    <h5 class="card-title">Sales Manager</h5>
+                    <p class="card-text">Name: tamda</br> Mobile: 1234567890 </br> Email: tdame@dealership.com </p>
+                </div>
+            </div>
+            </div>
+        </div>
     </body>
+<!-- Background image -->
+<div class="bg-image" 
+style="background-image: url('https://media.istockphoto.com/photos/group-of-3d-diverse-cars-in-a-row-picture-id494980855');
+       height: 50vh; width: 170vh;">
+</div>
+<!-- Background image -->
+    <div class="container  p-4 pb-0">
+        <footer class="text-center text-lg-start" style="background-color: #0a4275; position: fixed;
+        left: 0;
+        bottom: 0;
+        height: 40px;
+        width: 100%;">
+          <!-- Copyright -->
+          <div class="text-center text-white p-3" style="background-color: rgba(0.9, 0.5, 0, 0.2);">
+            © 2022 Copyright:
+            <a class="text-white" href="https://Bestcar.com/">Bestcar Dealership.com</a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        
+    </div>
 </html>
