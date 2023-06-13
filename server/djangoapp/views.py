@@ -97,7 +97,7 @@ def get_dealer_details(request, dealer_id):
         dealer = get_dealers_from_cf(dealer_url, dealerId=dealer_id)
         context['dealer'] = dealer
         # Get dealers from the URL
-        review_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
+        review_url = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get-review"
         reviews = get_dealer_reviews_from_cf(review_url, dealerId=dealer_id)
         print(reviews)
         context['reviews'] = reviews
@@ -108,8 +108,8 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     dealer_url      = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get_dealerships"
-    postreview_url  = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/post_review/post_review"
-    getreview_url   = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/get-reviews/get_reviews"
+    postreview_url  = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/post-review"
+    getreview_url   = "https://us-east.functions.appdomain.cloud/api/v1/web/gislainmba_gislainmba%40yahoo.fr/dealership-package/get-review"
     
     context = {}
     dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id)
